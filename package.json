@@ -1,0 +1,15 @@
+{
+  "name": "@luwuer/yunin-web-cli",
+  "version": "1.0.0",
+  "description": "yunyin cli for web product",
+  "bin": {
+    "yunyin": "bin/yunin.js"
+  },
+  "dependencies": {
+    "chalk": "^2.4.2",
+    "commander": "^2.19.0",
+    "glob": "^7.1.3",
+    "co": "^4.4.0",
+    "co-prompt": "^1.0.0"
+  }
+}
