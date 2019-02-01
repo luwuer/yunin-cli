@@ -1,16 +1,17 @@
 const { prompt } = require('inquirer')
 const { writeFile } = require('fs')
-const { listTable } = require(`${__dirname}/../utils`)
+const { Notice } = require('../lib/utils')
 
-let tplList = require(`${__dirname}/../templates`)
+let templatesDir = `${__dirname}/../templates`
+let templateLists = require(templatesDir)
 
-const question = [
+const questionLists = [
   {
     type: 'input',
     name: 'name',
-    message: 'Set the custom name of the template:',
-    validate (val) {
-      if (tplList[val]) {
+    message: 'Template name:',
+    validate(val) {
+      if (templateLists[val]) {
         return 'Template is existed!'
       } else if (val === '') {
         return 'Name is required!'
@@ -21,32 +22,40 @@ const question = [
   },
   {
     type: 'input',
-    name: 'place',
-    message: 'Owner/name of the template:',
-    validate (val) {
+    name: 'git',
+    message: 'Git repository(url):',
+    validate(val) {
       if (val !== '') {
         return true
       }
-      return 'Link is required!'
+
+      return 'Git repository is required!'
     }
   },
   {
     type: 'input',
     name: 'branch',
-    message: 'Branch of the template:',
+    message: 'Branch:',
     default: 'master'
   }
 ]
 
-module.exports = prompt(question).then(({ name, place, branch }) => {
-  tplList[name] = {}
-  tplList[name]['owner/name'] = place
-  tplList[name]['branch'] = branch
+module.exports = prompt(questionLists).then(({ name, git, branch }) => {
+  templateLists[name] = {
+    git,
+    branch
+  }
 
-  writeFile(`${__dirname}/../templates.json`, JSON.stringify(tplList), 'utf-8', (err) => {
-    if (err) {
-      console.log(err)
+  writeFile(
+    `${templatesDir}.json`,
+    JSON.stringify(templateLists),
+    'utf-8',
+    err => {
+      if (err) {
+        Notice.error(err)
+      }
+
+      Notice.success('Template add successful!')
     }
-    listTable(tplList, 'New template has been added successfully!')
-  })
+  )
 })
