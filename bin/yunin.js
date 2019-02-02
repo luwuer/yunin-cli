@@ -9,7 +9,6 @@ const program = require('commander')
  */
 program.version('1.0.0')
   .usage('<command> [project-name]')
-  .command('hello', 'hello world')
   .command('init', 'init a new project')
   .command('add', 'add a template')
   .command('remove', 'remove a template')
