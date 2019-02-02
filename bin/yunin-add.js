@@ -55,7 +55,7 @@ module.exports = prompt(questionList).then(({ name, git, branch }) => {
         notice.error(err)
       }
 
-      notice.success('Template add successful!')
+      notice.success('\n√ Template add completed!\n')
     }
   )
 })

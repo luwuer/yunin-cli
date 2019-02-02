@@ -2,7 +2,6 @@
 const { basename } = require('path')
 const { sync } = require('glob')
 const { exec } = require('child_process')
-const { writeFile } = require('fs')
 const { prompt } = require('inquirer')
 const { getNameList } = require('../lib/utils')
 const notice = require('../lib/notice')
@@ -37,7 +36,7 @@ const questionList = [
 
 prompt(questionList).then(({ projectName, templateName }) => {
   let rootName = basename(process.cwd())
-  
+
   // 支持新建目录，然后进入该目录执行init
   if (!fileList.length && rootName === projectName) {
     projectName = '.'
@@ -50,5 +49,18 @@ function generate(projectName, templateName) {
   let gitUrl = templates[templateName].git
   let gitBranch = templates[templateName].branch
 
+  let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${gitBranch}`
 
+  notice.info(`Fetch project from ${gitUrl} ...`)
+
+  exec(cmdStr, err => {
+    if (err) {
+      notice.error(`\n× Command failed: ${err.cmd}\n`)
+      process.exit()
+    }
+
+    notice.success('\n√ Generation completed!')
+    notice.info('\nThen you can run:')
+    notice.cmd(`\n  cd ${projectName} && yarn install\n`)
+  })
 }
