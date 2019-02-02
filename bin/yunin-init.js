@@ -1,38 +1,54 @@
-'use strict'
-const exec = require('child_process').exec
-const co = require('co')
-const prompt = require('co-prompt')
-const config = require('../templates')
-const chalk = require('chalk')
+#!/usr/bin/env node
+const { basename } = require('path')
+const { sync } = require('glob')
+const { exec } = require('child_process')
+const { writeFile } = require('fs')
+const { prompt } = require('inquirer')
+const { getNameList } = require('../lib/utils')
+const notice = require('../lib/notice')
+const templates = require('../templates.json')
 
-module.exports = () => {
- co(function *() {
-    // 处理用户输入
-      let tplName = yield prompt('Template name: ')
-      let projectName = yield prompt('Project name: ')
-      let gitUrl
-      let branch
+const templateNameList = getNameList(templates)
+const fileList = sync('*')
 
-    if (!config.tpl[tplName]) {
-        console.log(chalk.red('\n × Template does not exit!'))
-        process.exit()
-    }
-    gitUrl = config.tpl[tplName].url
-    branch = config.tpl[tplName].branch
-
-    // git命令，远程拉取项目并自定义项目名
-    let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${branch}`
-
-    console.log(chalk.white('\n Start generating...'))
-
-    exec(cmdStr, (error, stdout, stderr) => {
-      if (error) {
-        console.log(error)
-        process.exit()
+const questionList = [
+  {
+    type: 'input',
+    name: 'projectName',
+    message: 'Project name:',
+    validate(val) {
+      if (fileList.length) {
+        let exit = !!fileList.filter(name => name === val).length
+        if (exit) {
+          return `File(./${val}) is existed!`
+        }
       }
-      console.log(chalk.green('\n √ Generation completed!'))
-      console.log(`\n cd ${projectName} && npm install \n`)
-      process.exit()
-    })
-  })
+
+      return true
+    }
+  },
+  {
+    type: 'list',
+    name: 'templateName',
+    choices: templateNameList,
+    message: 'Template name:'
+  }
+]
+
+prompt(questionList).then(({ projectName, templateName }) => {
+  let rootName = basename(process.cwd())
+  
+  // 支持新建目录，然后进入该目录执行init
+  if (!fileList.length && rootName === projectName) {
+    projectName = '.'
+  }
+
+  generate(projectName, templateName)
+})
+
+function generate(projectName, templateName) {
+  let gitUrl = templates[templateName].git
+  let gitBranch = templates[templateName].branch
+
+
 }

@@ -2,6 +2,11 @@
   "name": "@luwuer/yunin-web-cli",
   "version": "1.0.0",
   "description": "yunyin cli for web product",
+  "license": "MIT",
+  "auther": {
+    "name": "luwuer",
+    "email": "html6@foxmail.com"
+  },
   "bin": {
     "yunin": "bin/yunin.js"
   },

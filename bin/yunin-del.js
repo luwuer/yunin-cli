@@ -1,16 +1,17 @@
 const { prompt } = require('inquirer')
 const { writeFile } = require('fs')
-const { Notice } = require('../lib/utils')
+const notice = require('../lib/notice')
+const { getNameList } = require('../lib/utils')
 
 let templatesDir = `${__dirname}/../templates`
 let templates = require(templatesDir)
-let templateNameLists = Object.keys.call(this, templates)
+let templateNameList = getNameList(templates)
 
-const questionLists = [
+const questionList = [
   {
     type: 'list',
     name: 'name',
-    choices: templateNameLists,
+    choices: templateNameList,
     message: 'Template name:'
   },
   {
@@ -20,9 +21,9 @@ const questionLists = [
   }
 ]
 
-module.exports = prompt(questionLists).then(({ name, confirm }) => {
+module.exports = prompt(questionList).then(({ name, confirm }) => {
   if (!confirm) {
-    Notice.info('Canceled deletion!')
+    notice.info('Canceled deletion!')
     return
   }
   
@@ -30,9 +31,9 @@ module.exports = prompt(questionLists).then(({ name, confirm }) => {
 
   writeFile(`${templatesDir}.json`, JSON.stringify(templates), 'utf-8', err => {
     if (err) {
-      Notice.error(err)
+      notice.error(err)
     }
 
-    Notice.success(`Template(${name}) has been deleted!`)
+    notice.success(`Template(${name}) has been deleted!`)
   })
 })

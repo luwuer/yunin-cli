@@ -1,11 +1,11 @@
 const { prompt } = require('inquirer')
 const { writeFile } = require('fs')
-const { Notice } = require('../lib/utils')
+const notice = require('../lib/notice')
 
 let templatesDir = `${__dirname}/../templates`
 let templateLists = require(templatesDir)
 
-const questionLists = [
+const questionList = [
   {
     type: 'input',
     name: 'name',
@@ -40,7 +40,7 @@ const questionLists = [
   }
 ]
 
-module.exports = prompt(questionLists).then(({ name, git, branch }) => {
+module.exports = prompt(questionList).then(({ name, git, branch }) => {
   templateLists[name] = {
     git,
     branch
@@ -52,10 +52,10 @@ module.exports = prompt(questionLists).then(({ name, git, branch }) => {
     'utf-8',
     err => {
       if (err) {
-        Notice.error(err)
+        notice.error(err)
       }
 
-      Notice.success('Template add successful!')
+      notice.success('Template add successful!')
     }
   )
 })
