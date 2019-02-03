@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 const program = require('commander')
 
 /**
@@ -7,9 +6,11 @@ const program = require('commander')
  *   commander支持git风格的子命令处理，可以根据子命令自动引导到以特定格式命名的命令执行文件，格式是[command]-[subcommand]
  *   如yunin hello可以找到/bin/yunin-hello.js
  */
-program.version('1.0.0')
-  .usage('<command> [project-name]')
+
+program.version('1.0.0', '-v, --version')
+  .usage('<command>')
   .command('init', 'init a new project')
-  .command('add', 'add a template')
-  .command('remove', 'remove a template')
+  .command('list', 'show template list')
+  .command('add', '[local] add a template')
+  .command('remove', '[local] remove a template')
   .parse(process.argv)

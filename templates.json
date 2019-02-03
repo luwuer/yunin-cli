@@ -1,1 +1,7 @@
-{"test1":{"git":"git@github.com:luwuer/yunin-web-cli.git","branch":"master"},"test2":{"git":"null","branch":"master"},"test3":{"git":"null","branch":"master"}}
+{
+  "yunin-web-cli": {
+    "git": "git@github.com:luwuer/yunin-web-cli.git",
+    "branch": "master",
+    "des": "云英前端脚手架"
+  }
+}

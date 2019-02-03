@@ -5,11 +5,13 @@ const notice = require('../lib/notice')
 let templatesDir = `${__dirname}/../templates`
 let templateLists = require(templatesDir)
 
+notice.warn('No server support now! If you want to add remote templates, should to create pull requests on https://github.com/luwuer/yunin-web-cli or email me(html6@foxmail.com)')
+
 const questionList = [
   {
     type: 'input',
     name: 'name',
-    message: 'Template name:',
+    message: 'Local template name:',
     validate(val) {
       if (templateLists[val]) {
         return 'Template is existed!'
@@ -37,13 +39,19 @@ const questionList = [
     name: 'branch',
     message: 'Branch:',
     default: 'master'
+  },
+  {
+    type: 'input',
+    name: 'des',
+    message: 'Description:'
   }
 ]
 
-module.exports = prompt(questionList).then(({ name, git, branch }) => {
+module.exports = prompt(questionList).then(({ name, git, branch, des }) => {
   templateLists[name] = {
     git,
-    branch
+    branch,
+    des
   }
 
   writeFile(
