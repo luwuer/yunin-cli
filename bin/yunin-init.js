@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-const { basename } = require('path')
+const chalk = require('chalk')
+const Spinner = require('cli-spinner').Spinner
+const { basename, resolve } = require('path')
 const { sync } = require('glob')
 const { exec } = require('child_process')
 const { prompt } = require('inquirer')
@@ -35,13 +37,15 @@ const questionList = [
 ]
 
 prompt(questionList).then(({ projectName, templateName }) => {
-  let rootName = basename(process.cwd())
+  let processDir = process.cwd()
+  let rootName = basename(processDir)
 
   // 支持新建目录，然后进入该目录执行init
   if (!fileList.length && rootName === projectName) {
     projectName = '.'
   }
 
+  notice.info(`Create project in ${chalk.yellow(resolve(processDir, projectName))}`)
   generate(projectName, templateName)
 })
 
@@ -49,9 +53,12 @@ function generate(projectName, templateName) {
   let gitUrl = templates[templateName].git
   let gitBranch = templates[templateName].branch
 
-  let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${gitBranch}`
+  let cmdStr = `git clone ${gitUrl} ${projectName} --progress && cd ${projectName} && git checkout ${gitBranch}`
 
-  notice.info(`Fetch project from ${gitUrl} ...`)
+  let spinner = new Spinner('Fetch project...')
+  spinner.setSpinnerString(0)
+  spinner.start()
+  // notice.info(`Fetch project from ${gitUrl} ...`)
 
   exec(cmdStr, err => {
     if (err) {
@@ -59,8 +66,11 @@ function generate(projectName, templateName) {
       process.exit()
     }
 
+    spinner.stop()
+
     notice.success('\n√ Generation completed!')
-    notice.info('\nThen you can run:')
-    notice.cmd(`\n  cd ${projectName} && yarn install\n`)
+    notice.info('\nThen you can run:\n')
+    notice.cmd(`cd ${projectName} && yarn`)
+    notice.cmd('yarn dev\n')
   })
 }

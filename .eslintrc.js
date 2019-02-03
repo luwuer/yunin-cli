@@ -15,11 +15,7 @@ module.exports = {
       "error",
       2
     ],
-    // "linebreak-style": [
-    //   "error",
-    //   "unix"
-    // ],
-    //
+    // 换行风格
     "linebreak-style": 0,
     "quotes": [
       "error",
