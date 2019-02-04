@@ -34,7 +34,7 @@ module.exports = prompt([
         notice.error(err)
       }
 
-      notice.success(`\n√ Template(${name}) has been removed!\n`)
+      notice.success(`Template(${name}) has been removed!\n`, true, 1)
     })
   })
 })

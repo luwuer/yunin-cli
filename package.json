@@ -1,7 +1,8 @@
 {
   "name": "@luwuer/yunin-web-cli",
   "version": "1.0.0",
-  "description": "yunyin cli for web product",
+  "description": "yunyin cli for web project",
+  "main": "bin/yunin.js",
   "license": "MIT",
   "auther": {
     "name": "luwuer",
@@ -22,5 +23,17 @@
   },
   "devDependencies": {
     "eslint": "^5.13.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/luwuer/yunin-web-cli.git"
+  },
+  "keywords": [
+    "yunin",
+    "cli"
+  ],
+  "bugs": {
+    "url": "https://github.com/luwuer/yunin-web-cli/issues"
+  },
+  "homepage": "https://github.com/luwuer/yunin-web-cli#readme"
 }

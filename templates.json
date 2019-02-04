@@ -1,7 +1,1 @@
-{
-  "yunin-web-cli": {
-    "git": "git@github.com:luwuer/yunin-web-cli.git",
-    "branch": "master",
-    "des": "云英前端脚手架"
-  }
-}
+{"yunin-web-cli":{"git":"git@github.com:luwuer/yunin-web-cli.git","branch":"master","des":"云英前端脚手架"}}

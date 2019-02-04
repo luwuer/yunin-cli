@@ -62,13 +62,13 @@ function generate(projectName, templateName) {
 
   exec(cmdStr, err => {
     if (err) {
-      notice.error(`\n× Command failed: ${err.cmd}\n`)
+      notice.error(`Command failed: ${err.cmd}\n`, true, 1)
       process.exit()
     }
 
     spinner.stop()
 
-    notice.success('\n√ Generation completed!')
+    notice.success('Generation completed!', true, 1)
     notice.info('\nThen you can run:\n')
     notice.cmd(`cd ${projectName} && yarn`)
     notice.cmd('yarn dev\n')
