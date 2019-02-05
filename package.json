@@ -1,6 +1,6 @@
 {
   "name": "@luwuer/yunin-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "yunyin cli for web project",
   "main": "bin/yunin.js",
   "license": "MIT",
