@@ -3,5 +3,10 @@
     "git": "git@github.com:luwuer/yunin-cli.git",
     "branch": "master",
     "des": "云英前端脚手架"
+  },
+  "yunin-base-template 2.0": {
+    "git": "git@github.com:luwuer/yunin-base-template-2.0.git",
+    "branch": "master",
+    "des": "基于vue-cli 2.x的管理台项目基础模板，IOP/PI等多个项目在用"
   }
 }
