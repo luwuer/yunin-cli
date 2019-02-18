@@ -26,14 +26,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/luwuer/yunin-web-cli.git"
+    "url": "git+ssh://git@github.com/luwuer/yunin-cli.git"
   },
   "keywords": [
     "yunin",
     "cli"
   ],
   "bugs": {
-    "url": "https://github.com/luwuer/yunin-web-cli/issues"
+    "url": "https://github.com/luwuer/yunin-cli/issues"
   },
-  "homepage": "https://github.com/luwuer/yunin-web-cli#readme"
+  "homepage": "https://github.com/luwuer/yunin-cli#readme"
 }
